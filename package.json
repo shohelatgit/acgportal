@@ -1,0 +1,14 @@
+{
+  "name": "xscapes-website",
+  "version": "1.0.0",
+  "description": "xScapes - NoVA's #1 Modern Landscape Architecture, Patio & Deck Builder",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "resend": "^4.8.0"
+  }
+}
