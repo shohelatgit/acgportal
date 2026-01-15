@@ -48,7 +48,7 @@
                 "@type": "LandscapeArchitectureFirm",
                 "name": "xScapes",
                 "description": "NoVA's premier modern landscape architecture firm specializing in patios, decks, hardscaping, and outdoor living spaces.",
-                "telephone": "(703) XXX-XXXX",
+                "telephone": "(703) 555-0123",
                 "email": "info@xscapesnova.com",
                 "url": "https://xscapesnova.com",
                 "areaServed": [
@@ -67,34 +67,61 @@
         </script>
 
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com/3.4.1?plugins=forms"></script>
         <script>
             tailwind.config = {
                 theme: {
                     extend: {
                         colors: {
-                            earth: {
-                                950: "#1c1917",
-                                900: "#292524",
-                                800: "#44403c",
-                                600: "#78716c",
+                            // Option 1: The "Classic Midnight" Palette
+                            primary: {
+                                DEFAULT: '#38bdf8', // Electric Blue (Primary Glow/Action)
+                                900: '#020617', // Deepest Navy (Background)
+                                800: '#0f172a', // Slate 900 (Glass Panel Base)
+                                700: '#1e293b',
+                                600: '#334155',
+                                500: '#475569',
+                                400: '#94a3b8', // Slate 400 (Secondary Details)
+                                300: '#cbd5e1',
+                                200: '#e2e8f0',
+                                100: '#f1f5f9',
                             },
-                            stone: {
-                                100: "#f5f5f4",
-                                50: "#fafaf9",
+                            secondary: {
+                                DEFAULT: '#10b981',
+                                glow: '#34d399',
                             },
-                            sage: {
-                                600: "#558b6e",
-                                500: "#6b8f71",
+                            background: {
+                                DEFAULT: '#020617', // Deepest Navy
+                                glass: '#0f172a', // Slate 900
+                                surface: '#0f172a',
                             },
-                            copper: {
-                                500: "#c2410c",
-                                600: "#9a3412",
+                            accent: {
+                                copper: {
+                                    DEFAULT: '#f97316',
+                                    glow: '#fb923c',
+                                },
+                                spaceIndigo: {
+                                    DEFAULT: '#101941',
+                                },
                             },
+                            text: {
+                                DEFAULT: '#f8fafc', // Off-white (Primary Text)
+                                muted: '#94a3b8', // Slate 400
+                                dim: '#64748b',
+                            },
+                        },
+                        backgroundImage: {
+                            'gradient-glow': 'radial-gradient(circle at center, rgba(56, 189, 248, 0.15) 0%, rgba(2, 6, 23, 0) 70%)',
+                            'gradient-surface': 'linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.4) 100%)',
                         },
                         fontFamily: {
                             sans: ["Inter", "system-ui", "sans-serif"],
                             display: ["Playfair Display", "Georgia", "serif"],
                         },
+                        letterSpacing: {
+                            'tight-heading': '-0.02em',
+                            'widest-xl': '0.25em',
+                        }
                     },
                 },
             };
@@ -109,401 +136,504 @@
         <style>
             body {
                 font-family: "Inter", sans-serif;
+                background-color: #020617; /* Midnight Navy */
+                color: #f8fafc;
+                line-height: 1.8;
+                -webkit-font-smoothing: antialiased;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-family: "Playfair Display", Georgia, serif;
+                letter-spacing: -0.02em;
+                color: #f1f5f9;
             }
             .font-display {
                 font-family: "Playfair Display", Georgia, serif;
             }
-            .glass-card {
-                background: rgba(255, 255, 255, 0.85);
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.5);
+            .label-text {
+                font-family: "Inter", sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 0.25em;
+                font-weight: 700;
+                font-size: 0.7rem;
+            }
+            
+            /* === GLASSMORPHISM UTILITIES === */
+            .glass-panel {
+                background: rgba(15, 23, 42, 0.6); /* Slate 900 @ 60% */
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            }
+            
+            .glass-panel-light {
+                background: rgba(30, 41, 59, 0.4); /* Slate 800 @ 40% */
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .glass-button {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(4px);
+                transition: all 0.3s ease;
+            }
+            .glass-button:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 0 15px rgba(56, 189, 248, 0.15); /* Blue glow */
+            }
+
+            /* === ANIMATIONS === */
+            @keyframes fadeUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-up {
+                animation: fadeUp 0.8s ease-out forwards;
+            }
+            .delay-100 { animation-delay: 0.1s; }
+            .delay-200 { animation-delay: 0.2s; }
+            .delay-300 { animation-delay: 0.3s; }
+
+            /* === SERVICES GRID (Dark) === */
+            .services-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 32px;
+            }
+            @media (max-width: 1024px) {
+                .services-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+            @media (max-width: 768px) {
+                .services-grid { grid-template-columns: 1fr; }
+            }
+
+            .service-card {
+                background: rgba(15, 23, 42, 0.4);
+                padding: 40px 32px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                height: 100%;
+                transition: all 0.4s ease;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                overflow: hidden;
+            }
+            /* Subtle spotlight glow on hover */
+            .service-card::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
+                opacity: 0;
+                transition: opacity 0.5s;
+                pointer-events: none;
+            }
+            .service-card:hover::before {
+                opacity: 1;
+            }
+            .service-card:hover {
+                transform: translateY(-5px);
+                border-color: rgba(56, 189, 248, 0.3); /* Electric Blue Border */
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            }
+
+            .service-icon {
+                width: 56px;
+                height: 56px;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 24px;
+                color: #38bdf8; /* Electric Blue */
+            }
+
+            /* Hover scale effect for images */
+            .hover-scale {
+                transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+            .group:hover .hover-scale {
+                transform: scale(1.05);
+            }
+            
+            /* === SCROLLBAR (Dark) === */
+            ::-webkit-scrollbar { width: 10px; }
+            ::-webkit-scrollbar-track { background: #020617; }
+            ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
+            ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+            /* === MARQUEE ANIMATION === */
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            .animate-marquee {
+                animation: marquee 40s linear infinite;
+            }
+            .pause-marquee:hover {
+                animation-play-state: paused;
             }
         </style>
     </head>
-    <body class="bg-stone-50 text-stone-900 antialiased">
-        <!-- Top Bar -->
-        <div class="bg-earth-900 text-white py-2">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div
-                    class="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm"
-                >
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="phone" class="w-4 h-4"></i>
-                        <span>(703) XXX-XXXX</span>
+    <body class="bg-background text-text antialiased">
+        <!-- Elegant Navbar (Floating Titanium Glass) -->
+        <header class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[1400px] z-50 transition-all duration-300 rounded-full border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl overflow-hidden">
+            <!-- Metallic Sheen Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-primary-900/70 pointer-events-none"></div>
+            
+            <div class="relative w-full px-8 py-4 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-primary-600 text-white rounded-full flex items-center justify-center transition-transform group-hover:scale-110 shadow-[0_0_15px_rgba(56,189,248,0.4)]">
+                         <i data-lucide="trees" class="w-5 h-5"></i>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="mail" class="w-4 h-4"></i>
-                        <span>info@xscapesnova.com</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="map-pin" class="w-4 h-4"></i>
-                        <span>Serving Fairfax, Arlington & All NoVA</span>
-                    </div>
-                </div>
+                    <span class="font-display text-2xl font-semibold tracking-tight text-white drop-shadow-md">xScapes</span>
+                </a>
+
+                <!-- Nav -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-primary-200">
+                    <a href="#services" class="hover:text-white transition-colors uppercase text-xs tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">Services</a>
+                    <a href="#portfolio" class="hover:text-white transition-colors uppercase text-xs tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">Portfolio</a>
+                    <a href="/materials.html" class="hover:text-white transition-colors uppercase text-xs tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">Materials</a>
+                    <a href="/about.html" class="hover:text-white transition-colors uppercase text-xs tracking-widest hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">About</a>
+                    <a href="/contact.html" class="btn-pill glass-button text-white text-xs py-3 px-8 rounded-full hover:bg-white/20 transition-all border border-white/20 shadow-lg">
+                        Inquire
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-white hover:bg-white/10 rounded-full transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden fixed top-20 left-0 w-full bg-primary-900 border-b border-white/10 z-40 shadow-xl backdrop-blur-xl">
+            <div class="px-6 py-6 space-y-4">
+                <a href="#services" class="block text-primary-200 font-medium hover:text-primary">Services</a>
+                <a href="#portfolio" class="block text-primary-200 font-medium hover:text-primary">Portfolio</a>
+                <a href="/materials.html" class="block text-primary-200 font-medium hover:text-primary">Materials</a>
+                <a href="/about.html" class="block text-primary-200 font-medium hover:text-primary">About</a>
+                <a href="/contact.html" class="block bg-primary text-primary-900 px-6 py-3 rounded-full font-semibold text-center mt-4 shadow-[0_0_20px_rgba(56,189,248,0.4)]">Inquire</a>
             </div>
         </div>
 
-        <!-- Navigation -->
-        <nav
-            class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm"
-        >
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16 items-center">
-                    <a href="/" class="flex items-center gap-2">
-                        <div class="w-10 h-10 bg-earth-900 rounded-lg flex items-center justify-center">
-                            <i data-lucide="trees" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <span class="font-display text-2xl font-bold text-earth-900">xScapes</span>
-                    </a>
-
-                    <div class="hidden md:flex items-center space-x-8">
-                        <a href="#services" class="text-sm font-semibold text-stone-600 hover:text-sage-600 transition-colors">Services</a>
-                        <a href="#portfolio" class="text-sm font-semibold text-stone-600 hover:text-sage-600 transition-colors">Portfolio</a>
-                        <a href="/materials.html" class="text-sm font-semibold text-stone-600 hover:text-sage-600 transition-colors">Materials</a>
-                        <a href="/about.html" class="text-sm font-semibold text-stone-600 hover:text-sage-600 transition-colors">About</a>
-                        <a href="#contact" class="bg-copper-500 hover:bg-copper-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">Get Quote</a>
-                    </div>
-
-                    <button
-                        id="mobile-menu-btn"
-                        class="md:hidden p-2 text-stone-600"
-                    >
-                        <i data-lucide="menu" class="h-6 w-6"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div
-                id="mobile-menu"
-                class="hidden md:hidden bg-white border-t border-stone-100"
-            >
-                <div class="px-4 py-4 space-y-3">
-                    <a href="#services" class="block text-sm font-semibold text-stone-600 hover:text-sage-600">Services</a>
-                    <a href="#portfolio" class="block text-sm font-semibold text-stone-600 hover:text-sage-600">Portfolio</a>
-                    <a href="/materials.html" class="block text-sm font-semibold text-stone-600 hover:text-sage-600">Materials</a>
-                    <a href="/about.html" class="block text-sm font-semibold text-stone-600 hover:text-sage-600">About</a>
-                    <a href="#contact" class="block text-sm font-semibold text-sage-600">Get Quote</a>
-                </div>
-            </div>
-        </nav>
-
         <!-- Hero Section -->
-        <section
-            id="home"
-            class="relative min-h-[750px] flex items-center text-white"
-        >
+        <section id="hero" class="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
             <!-- Background Image & Overlay -->
             <div class="absolute inset-0 z-0">
                 <img
-                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop"
-                    alt="Modern outdoor living space with patio and landscape"
+                    src="/images/hero-background-optimized.png"
+                    alt="Luxury outdoor living space in Northern Virginia"
                     class="w-full h-full object-cover"
                 />
-                <div class="absolute inset-0 bg-earth-900/75 bg-gradient-to-r from-earth-900 via-earth-900/80 to-earth-900/60"></div>
+                <div class="absolute inset-0 bg-black/40"></div>
+                <!-- Gradient Overlay for Text Readability -->
+                <div class="absolute inset-0 bg-gradient-to-t from-primary-900/80 via-transparent to-primary-900/30"></div>
             </div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-12 w-full">
-                <!-- Left Column: Value Props -->
-                <div class="space-y-8">
-                    <!-- Trust Badges -->
-                    <div class="flex flex-wrap gap-6 text-sm font-semibold tracking-wide">
-                        <div class="flex items-center gap-3">
-                            <div class="relative">
-                                <i data-lucide="award" class="text-white w-10 h-10"></i>
-                            </div>
-                            <div class="leading-tight">
-                                <div class="text-white">5-STAR RATED</div>
-                                <div class="text-stone-200">BY 100+ CLIENTS</div>
-                            </div>
-                        </div>
-                        <div class="w-px h-10 bg-sage-500 hidden md:block"></div>
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="shield-check" class="text-white w-10 h-10"></i>
-                            <div class="leading-tight">
-                                <div class="text-white">FULLY LICENSED</div>
-                                <div class="text-stone-200">& INSURED</div>
-                            </div>
+            <div class="w-full relative z-10 max-w-5xl mx-auto px-4 text-center text-white">
+                <!-- Trust Badge -->
+                <div class="flex justify-center mb-8 opacity-0 animate-fade-up" style="animation-fill-mode: forwards;">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20">
+                        <i data-lucide="award" class="text-primary w-4 h-4"></i>
+                        <span class="label-text text-white tracking-widest">NoVA's Premier Landscape Firm</span>
+                    </div>
+                </div>
+
+                <!-- Headline -->
+                <h1 class="font-display text-5xl md:text-7xl font-medium leading-tight mb-8 opacity-0 animate-fade-up delay-100" style="animation-fill-mode: forwards;">
+                    Your Backyard,<br />
+                    <span class="italic text-primary">Transformed.</span>
+                </h1>
+
+                <!-- Subtext -->
+                <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-10 font-light leading-relaxed opacity-0 animate-fade-up delay-200" style="animation-fill-mode: forwards;">
+                    We architect award-winning outdoor sanctuaries that seamlessly blend modern design with the natural world.
+                </p>
+
+                <!-- CTAs -->
+                <div class="flex flex-wrap justify-center items-center gap-6 opacity-0 animate-fade-up delay-300" style="animation-fill-mode: forwards;">
+                    <div class="relative">
+                        <div class="glass-panel rounded-full px-3 py-3" style="background: rgba(255,255,255,0.95);">
+                            <a href="/contact.html" class="btn-pill bg-transparent text-black text-lg flex items-center gap-2 px-8 py-4">
+                                Start Your Transformation
+                            </a>
                         </div>
                     </div>
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-white/10 rounded-full blur-2xl -z-10"></div>
+                        <div class="glass-panel rounded-full px-3 py-3">
+                            <a href="#portfolio" class="btn-pill bg-transparent text-white text-lg flex items-center gap-2 px-8 py-4">
+                                View Gallery
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/70 animate-bounce">
+                <i data-lucide="chevron-down" class="w-8 h-8"></i>
+            </div>
+        </section>
 
-                    <!-- Headline -->
-                    <h1 class="font-display text-5xl md:text-6xl font-bold leading-tight">
-                        Transform Your Outdoor Space Into a
-                        <span class="text-sage-400">Living Work of Art</span>
-                    </h1>
-
-                    <!-- Subtext -->
-                    <p class="text-stone-200 text-lg max-w-xl leading-relaxed">
-                        NoVA's premier landscape architecture firm. We design and build stunning patios, decks, outdoor kitchens, and complete outdoor living spaces that elevate your lifestyle.
+        <!-- Process Section - Interactive Monitor -->
+        <section id="process" class="py-32 bg-primary-900 relative overflow-hidden">
+            <!-- Background Glow -->
+            <div class="absolute inset-0 bg-gradient-glow opacity-30 pointer-events-none"></div>
+            
+            <div class="w-[90%] max-w-[1400px] mx-auto relative z-10">
+                <!-- Header -->
+                <div class="text-center mb-16">
+                    <span class="label-text text-primary mb-4 block tracking-widest">The Process</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-medium text-white mb-6">Designed for Transparency</h2>
+                    <p class="text-primary-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                        Explore our workflow. We demystify the construction process so you can focus on the vision.
                     </p>
-
-                    <!-- Services Pills -->
-                    <div class="flex flex-wrap gap-2">
-                        <div class="flex items-center gap-2 bg-earth-800/80 border border-sage-500 px-3 py-2 rounded-lg backdrop-blur-sm whitespace-nowrap">
-                            <i data-lucide="check" class="w-4 h-4 text-sage-400 flex-shrink-0"></i>
-                            <span class="font-semibold text-sm">Custom Patios</span>
-                        </div>
-                        <div class="flex items-center gap-2 bg-earth-800/80 border border-sage-500 px-3 py-2 rounded-lg backdrop-blur-sm whitespace-nowrap">
-                            <i data-lucide="check" class="w-4 h-4 text-sage-400 flex-shrink-0"></i>
-                            <span class="font-semibold text-sm">Deck Construction</span>
-                        </div>
-                        <div class="flex items-center gap-2 bg-earth-800/80 border border-sage-500 px-3 py-2 rounded-lg backdrop-blur-sm whitespace-nowrap">
-                            <i data-lucide="check" class="w-4 h-4 text-sage-400 flex-shrink-0"></i>
-                            <span class="font-semibold text-sm">Hardscaping</span>
-                        </div>
-                        <div class="flex items-center gap-2 bg-earth-800/80 border border-sage-500 px-3 py-2 rounded-lg backdrop-blur-sm whitespace-nowrap">
-                            <i data-lucide="check" class="w-4 h-4 text-sage-400 flex-shrink-0"></i>
-                            <span class="font-semibold text-sm">Outdoor Kitchens</span>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Right Column: Quote Form -->
-                <div class="lg:pl-12">
-                    <div class="bg-earth-900/70 backdrop-blur-md border border-sage-500 p-6 md:p-8 rounded-2xl shadow-2xl relative">
-                        <div class="text-center mb-6">
-                            <p class="text-lg text-stone-200">Start Your</p>
-                            <h3 class="text-2xl font-bold text-white">Free Design Consultation</h3>
+                <!-- Monitor/Window Component (Expanded & Styled) -->
+                <div class="glass-panel rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[900px] animate-fade-up shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 ring-1 ring-white/5">
+                    <!-- Sidebar -->
+                    <div class="w-full md:w-80 bg-primary-900/60 border-b md:border-b-0 md:border-r border-white/5 flex flex-col shrink-0 backdrop-blur-xl">
+                        <!-- Window Controls (Brandbook Style) -->
+                        <div class="p-8 border-b border-white/5 flex items-center justify-between">
+                             <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-[#ff5f57] shadow-sm"></div>
+                                <div class="w-3 h-3 rounded-full bg-[#febc2e] shadow-sm"></div>
+                                <div class="w-3 h-3 rounded-full bg-[#28c840] shadow-sm"></div>
+                             </div>
+                             <span class="text-[10px] font-bold text-primary-500 uppercase tracking-widest">xOS v2.0</span>
                         </div>
-
-                        <form id="quote-form" class="space-y-4">
-                            <!-- Service Selection -->
-                            <div>
-                                <label class="block text-xs font-semibold text-stone-300 mb-2">What would you like to build? *</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <label class="flex items-center gap-2 bg-white/10 border border-stone-600 px-3 py-2 rounded-md cursor-pointer hover:bg-white/20 transition-colors">
-                                        <input type="checkbox" name="services" value="Patio" class="w-4 h-4 rounded border-stone-400 text-sage-600 focus:ring-sage-500">
-                                        <span class="text-sm text-white">Patio</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 bg-white/10 border border-stone-600 px-3 py-2 rounded-md cursor-pointer hover:bg-white/20 transition-colors">
-                                        <input type="checkbox" name="services" value="Deck" class="w-4 h-4 rounded border-stone-400 text-sage-600 focus:ring-sage-500">
-                                        <span class="text-sm text-white">Deck</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 bg-white/10 border border-stone-600 px-3 py-2 rounded-md cursor-pointer hover:bg-white/20 transition-colors">
-                                        <input type="checkbox" name="services" value="Outdoor Kitchen" class="w-4 h-4 rounded border-stone-400 text-sage-600 focus:ring-sage-500">
-                                        <span class="text-sm text-white">Outdoor Kitchen</span>
-                                    </label>
-                                    <label class="flex items-center gap-2 bg-white/10 border border-stone-600 px-3 py-2 rounded-md cursor-pointer hover:bg-white/20 transition-colors">
-                                        <input type="checkbox" name="services" value="Full Landscape" class="w-4 h-4 rounded border-stone-400 text-sage-600 focus:ring-sage-500">
-                                        <span class="text-sm text-white">Full Landscape</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <input type="text" name="address" placeholder="Project Address *" class="w-full h-12 px-4 rounded-md text-stone-800 bg-white border-none focus:ring-2 focus:ring-sage-500 placeholder:text-stone-400">
-
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="text" name="name" placeholder="Your Name *" required class="w-full h-12 px-4 rounded-md text-stone-800 bg-white border-none focus:ring-2 focus:ring-sage-500 placeholder:text-stone-400">
-                                <input type="tel" name="phone" placeholder="Phone Number *" required class="w-full h-12 px-4 rounded-md text-stone-800 bg-white border-none focus:ring-2 focus:ring-sage-500 placeholder:text-stone-400">
-                            </div>
-
-                            <input type="email" name="email" placeholder="Email Address *" required class="w-full h-12 px-4 rounded-md text-stone-800 bg-white border-none focus:ring-2 focus:ring-sage-500 placeholder:text-stone-400">
-
-                            <!-- Budget Range -->
-                            <div>
-                                <label class="block text-xs font-semibold text-stone-300 mb-2">Estimated Budget</label>
-                                <select name="budget" class="w-full h-12 px-4 rounded-md text-stone-800 bg-white border-none focus:ring-2 focus:ring-sage-500 appearance-none cursor-pointer">
-                                    <option value="">Select Budget Range</option>
-                                    <option value="Under $15,000">Under $15,000</option>
-                                    <option value="$15,000 - $30,000">$15,000 - $30,000</option>
-                                    <option value="$30,000 - $50,000">$30,000 - $50,000</option>
-                                    <option value="$50,000 - $75,000">$50,000 - $75,000</option>
-                                    <option value="$75,000+">$75,000+</option>
-                                </select>
-                            </div>
-
-                            <!-- Timeline -->
-                            <div>
-                                <label class="block text-xs font-semibold text-stone-300 mb-2">Project Timeline</label>
-                                <select name="timeline" class="w-full h-12 px-4 rounded-md text-stone-800 bg-white border-none focus:ring-2 focus:ring-sage-500 appearance-none cursor-pointer">
-                                    <option value="">When would you like to start?</option>
-                                    <option value="ASAP">ASAP - Ready to start</option>
-                                    <option value="1-3 months">Within 1-3 months</option>
-                                    <option value="3-6 months">Within 3-6 months</option>
-                                    <option value="6+ months">Just planning/researching</option>
-                                </select>
-                            </div>
-
-                            <textarea name="description" placeholder="Tell us about your project vision..." rows="3" class="w-full px-4 py-3 rounded-md text-stone-800 bg-white border-none focus:ring-2 focus:ring-sage-500 placeholder:text-stone-400 resize-none"></textarea>
-
-                            <button type="submit" class="w-full bg-copper-500 hover:bg-copper-600 text-white font-bold py-4 rounded-md transition duration-300 text-lg shadow-lg mt-2">
-                                Request Free Consultation
+                        
+                        <!-- Navigation -->
+                        <nav class="flex-1 p-6 space-y-3 flex md:flex-col overflow-x-auto md:overflow-visible">
+                            <button class="nav-item group w-full text-left px-5 py-4 rounded-xl flex items-center gap-4 text-sm font-medium transition-all duration-300 bg-primary text-primary-900 shadow-[0_0_20px_rgba(56,189,248,0.3)]" data-step="assess">
+                                <i data-lucide="scan-line" class="w-5 h-5"></i>
+                                <span>Site Assessment</span>
                             </button>
-
-                            <div id="form-status" class="hidden text-center text-sm py-2 rounded-lg"></div>
-                        </form>
-
-                        <div class="mt-6 text-center text-xs text-stone-400">
-                            <p>No obligation. 100% free consultation.</p>
-                        </div>
+                            <button class="nav-item group w-full text-left px-5 py-4 rounded-xl flex items-center gap-4 text-sm font-medium transition-all duration-300 text-primary-400 hover:bg-white/5 hover:text-white" data-step="plan">
+                                <i data-lucide="ruler" class="w-5 h-5"></i>
+                                <span>Concept Planning</span>
+                            </button>
+                            <button class="nav-item group w-full text-left px-5 py-4 rounded-xl flex items-center gap-4 text-sm font-medium transition-all duration-300 text-primary-400 hover:bg-white/5 hover:text-white" data-step="design">
+                                <i data-lucide="palette" class="w-5 h-5"></i>
+                                <span>Design & Material</span>
+                            </button>
+                            <button class="nav-item group w-full text-left px-5 py-4 rounded-xl flex items-center gap-4 text-sm font-medium transition-all duration-300 text-primary-400 hover:bg-white/5 hover:text-white" data-step="build">
+                                <i data-lucide="hammer" class="w-5 h-5"></i>
+                                <span>Precision Build</span>
+                            </button>
+                            <button class="nav-item group w-full text-left px-5 py-4 rounded-xl flex items-center gap-4 text-sm font-medium transition-all duration-300 text-primary-400 hover:bg-white/5 hover:text-white" data-step="finish">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                <span>Final Reveal</span>
+                            </button>
+                        </nav>
                     </div>
-                </div>
+
+                    <!-- Content Area -->
+                    <div class="flex-1 bg-gradient-to-br from-primary-900/40 to-primary-900/20 p-10 md:p-16 relative overflow-hidden flex flex-col">
+                         <!-- Dynamic Content Panels -->
+                         
+                         <!-- Panel 1: Assess (Updated Image) -->
+                         <div class="step-panel flex flex-col h-full" data-panel="assess">
+                             <div class="mb-10">
+                                 <span class="text-primary font-bold text-xs tracking-widest uppercase mb-3 block">Step 01</span>
+                                 <h3 class="font-display text-4xl text-white mb-6">Site Assessment</h3>
+                                 <p class="text-primary-300 text-lg leading-relaxed max-w-full">
+                                     We conduct a rigorous analysis of your property's topography, drainage, and sun exposure. This data-driven approach ensures your design is not just beautiful, but buildable and sustainable.
+                                 </p>
+                             </div>
+<div class="mt-auto relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 ring-1 ring-white/5 h-[600px]">
+<img src="/images/5ceb879a-d9ad-40fe-bfd3-179442d937c3.png" 
+                                        alt="3D Lidar Scan of Property" 
+                                        class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105"
+                                        id="isometric-image-assess">
+                             </div>
+                         </div>
+
+                         <!-- Panel 2: Plan (Updated Image) -->
+                         <div class="step-panel hidden flex flex-col h-full" data-panel="plan">
+                             <div class="mb-10">
+                                 <span class="text-primary font-bold text-xs tracking-widest uppercase mb-3 block">Step 02</span>
+                                 <h3 class="font-display text-4xl text-white mb-6">Concept Planning</h3>
+                                 <p class="text-primary-300 text-lg leading-relaxed max-w-full">
+                                     Our architects draft initial spatial layouts. We define zones for dining, lounging, and play, ensuring seamless flow between your home's interior and the new exterior.
+                                 </p>
+                             </div>
+<div class="mt-auto relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 ring-1 ring-white/5 h-[600px]">
+<img src="/images/ChatGPT Image Jan 14, 2026, 08_45_13 PM.png" 
+                                        alt="Architectural Concept Plan" 
+                                        class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105">
+                             </div>
+                         </div>
+
+                         <!-- Panel 3: Design -->
+                         <div class="step-panel hidden flex flex-col h-full" data-panel="design">
+                             <div class="mb-10">
+                                 <span class="text-primary font-bold text-xs tracking-widest uppercase mb-3 block">Step 03</span>
+                                 <h3 class="font-display text-4xl text-white mb-6">Design & Material Selection</h3>
+                                 <p class="text-primary-300 text-lg leading-relaxed max-w-full">
+                                     See your future space in photorealistic 3D. We curate a palette of premium materials—Travertine, Ipe wood, Corten steel—customized to your aesthetic.
+                                 </p>
+                             </div>
+<div class="mt-auto relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 ring-1 ring-white/5 h-[600px]">
+                                  <img src="/images/jabhook040_photorealistic_3d_isometric_render_lidar_render_of_38739219-1b70-4f0e-8073-6dd1e82fc178_2.png" 
+                                       alt="3D Design Render" 
+                                       class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105">
+                             </div>
+                         </div>
+
+                         <!-- Panel 4: Build -->
+                         <div class="step-panel hidden flex flex-col h-full" data-panel="build">
+                             <div class="mb-10">
+                                 <span class="text-primary font-bold text-xs tracking-widest uppercase mb-3 block">Step 04</span>
+                                 <h3 class="font-display text-4xl text-white mb-6">Precision Build</h3>
+                                 <p class="text-primary-300 text-lg leading-relaxed max-w-full">
+                                     Our master craftsmen execute the plan with exacting standards. From structural footings to the final stone setting, we manage every detail of construction.
+                                 </p>
+                             </div>
+<div class="mt-auto relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 ring-1 ring-white/5 h-[600px]">
+                                  <img src="/images/jabhook040_photorealistic_3d_isometric_render_lidar_render_of_53642a66-78ba-45ae-a49e-56ef8244b0f1_1.png" 
+                                       alt="Construction Phase" 
+                                       class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105">
+                             </div>
+                         </div>
+
+                         <!-- Panel 5: Finish (Updated Image) -->
+                         <div class="step-panel hidden flex flex-col h-full" data-panel="finish">
+                             <div class="mb-10">
+                                 <span class="text-primary font-bold text-xs tracking-widest uppercase mb-3 block">Step 05</span>
+                                 <h3 class="font-display text-4xl text-white mb-6">Final Reveal</h3>
+                                 <p class="text-primary-300 text-lg leading-relaxed max-w-full">
+                                     A white-glove walkthrough ensures perfection. We hand over your new sanctuary, complete with care guides and our industry-leading warranty.
+                                 </p>
+                             </div>
+<div class="mt-auto relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 ring-1 ring-white/5 h-[600px]">
+                                  <img src="/images/jabhook040_photorealistic_3d_isometric_render_lidar_render_of_1b567f96-ad88-4545-9913-5edd7618960d_1.png" 
+                                       alt="Completed Luxury Landscape" 
+                                       class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105">
+                             </div>
+                         </div>
+
+                    </div>
+</div>
             </div>
         </section>
 
         <!-- Materials Teaser Section -->
-        <section class="py-16 bg-stone-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="py-16 bg-spaceIndigo">
+            <div class="w-full px-[20%]">
                 <div class="text-center mb-12">
-                    <p class="text-sage-600 font-semibold text-sm uppercase tracking-wide mb-2">Explore Your Options</p>
-                    <h2 class="font-display text-3xl md:text-4xl font-bold text-earth-900">Premium Materials for Every Style</h2>
-                    <p class="text-stone-600 mt-4 max-w-2xl mx-auto">Browse our curated selection of paver stones, decking materials, natural stone, and more to find the perfect match for your dream outdoor space.</p>
+                    <p class="text-primary-500 font-semibold text-sm uppercase tracking-wide mb-2">Explore Your Options</p>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-white">Options for All</h2>
+                    <p class="text-slate-300 mt-4 max-w-2xl mx-auto">From backyard patios to pool design, we create outdoor spaces for every need.</p>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="/materials.html#patios" class="group relative h-48 rounded-xl overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=400&auto=format&fit=crop" alt="Paver patio" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-earth-900/60"></div>
+                    <a href="/services/patios-outdoor-living.html" class="group relative h-64 rounded-xl overflow-hidden">
+                        <img src="/images/architect02116_modern_family_home_Architectural_Digest_style_sl_faa1d8d1-99f0-487f-9ed9-56b36c159dad.png" alt="Backyard patio" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-primary-600/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-white font-semibold text-lg">Paver Stones</span>
+                            <span class="text-white font-semibold text-lg">Backyard Patios</span>
                         </div>
                     </a>
-                    <a href="/materials.html#decks" class="group relative h-48 rounded-xl overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=400&auto=format&fit=crop" alt="Composite deck" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-earth-900/60"></div>
+                    <a href="/services/landscape-design.html" class="group relative h-64 rounded-xl overflow-hidden">
+                        <img src="/images/hygreentool_31932_ultra-realistic_top-down_aerial_view_of_an_Am_6acf0665-884e-4dc2-8801-bbd8097483e1.png" alt="Landscape architecture" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-primary-600/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-white font-semibold text-lg">Decking</span>
+                            <span class="text-white font-semibold text-lg">Landscape Architecture</span>
                         </div>
                     </a>
-                    <a href="/materials.html#stone" class="group relative h-48 rounded-xl overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=400&auto=format&fit=crop" alt="Natural stone" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-earth-900/60"></div>
+                    <a href="/services/hardscaping.html" class="group relative h-64 rounded-xl overflow-hidden">
+                        <img src="/images/psneeringer_Paul_Sneeringer_Northern_Virginia_Realtor_luxury_ho_e62ecd3b-92f7-47e6-87a0-90832803c31d.png" alt="Pool design" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-primary-600/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-white font-semibold text-lg">Natural Stone</span>
+                            <span class="text-white font-semibold text-lg">Pool Design</span>
                         </div>
                     </a>
-                    <a href="/materials.html#outdoor" class="group relative h-48 rounded-xl overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=400&auto=format&fit=crop" alt="Outdoor kitchen" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-earth-900/60"></div>
+                    <a href="/services/decks-pergolas.html" class="group relative h-64 rounded-xl overflow-hidden">
+                        <img src="/images/sprizzy5133_how_far_should_a_fire_pit_be_from_a_house_--v_7_880811e0-4a3a-429d-af48-bf0a0b9d62f9.png" alt="Outdoor design" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-primary-600/60"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-white font-semibold text-lg">Outdoor Living</span>
+                            <span class="text-white font-semibold text-lg">Outdoor Design</span>
                         </div>
                     </a>
                 </div>
 
                 <div class="text-center mt-8">
-                    <a href="/materials.html" class="inline-flex items-center gap-2 text-earth-900 font-semibold hover:text-sage-600 transition-colors">
-                        Explore All Materials <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <a href="/services/landscape-design.html" class="inline-flex items-center gap-2 text-white font-semibold hover:text-primary-400 transition-colors">
+                        Explore All Services <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section id="services" class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <p class="text-sage-600 font-semibold text-sm uppercase tracking-wide mb-2">Our Services</p>
-                    <h2 class="font-display text-4xl font-bold text-earth-900 mb-4">Complete Outdoor Living Solutions</h2>
-                    <p class="text-stone-600 text-lg">From initial concept to final installation, we handle every aspect of your outdoor transformation with precision and artistry.</p>
+        <!-- Services Section - Gallery Style -->
+        <section id="services" class="py-24 bg-spaceIndigo relative">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-16 text-center">
+                    <span class="label-text text-primary mb-4 block tracking-widest">Our Expertise</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-medium text-white">Curated Outdoor Living</h2>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <a href="services/landscape-design.html" class="group">
-                        <div class="bg-stone-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-stone-100 h-full">
-                            <div class="bg-sage-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
-                                <i data-lucide="pen-tool" class="w-8 h-8 text-sage-600"></i>
-                            </div>
-                            <h3 class="font-display text-2xl font-bold text-earth-900 mb-3 group-hover:text-sage-600 transition-colors">Landscape Design</h3>
-                            <p class="text-stone-600 leading-relaxed mb-4">Custom 3D renderings and master planning to bring your outdoor vision to life before we break ground.</p>
-                            <ul class="space-y-2 text-sm text-stone-700 mb-4">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> 3D Design Concepts</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Site Analysis</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Plant Selection Plans</li>
-                            </ul>
-                            <div class="flex items-center text-sage-600 font-semibold text-sm">
-                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="services/patios-outdoor-living.html" class="group">
-                        <div class="bg-stone-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-stone-100 h-full">
-                            <div class="bg-sage-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
-                                <i data-lucide="grid" class="w-8 h-8 text-sage-600"></i>
-                            </div>
-                            <h3 class="font-display text-2xl font-bold text-earth-900 mb-3 group-hover:text-sage-600 transition-colors">Patios & Outdoor Living</h3>
-                            <p class="text-stone-600 leading-relaxed mb-4">Stunning paver patios, stamped concrete, and seamless transitions from indoor to outdoor living spaces.</p>
-                            <ul class="space-y-2 text-sm text-stone-700 mb-4">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Paver Patios</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Stamped Concrete</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Fire Pits & Seating</li>
-                            </ul>
-                            <div class="flex items-center text-sage-600 font-semibold text-sm">
-                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Landscape Design -->
+                    <a href="services/landscape-design.html" class="group block h-full">
+                        <div class="service-card bg-spaceIndigo/50 p-10 h-full border border-white/10 hover:border-accent-copper transition-all duration-500 relative overflow-hidden">
+                             <!-- Number -->
+                            <span class="absolute top-6 right-6 text-9xl font-display text-white/30 opacity-50 group-hover:text-accent-copper/10 transition-colors">01</span>
+                            
+                            <div class="relative z-10">
+                                <div class="w-12 h-12 mb-8 text-primary group-hover:text-accent-copper transition-colors">
+                                    <i data-lucide="pen-tool" class="w-full h-full stroke-1"></i>
+                                </div>
+                                <h3 class="font-display text-2xl mb-4 group-hover:translate-x-2 transition-transform duration-300 text-white">Landscape Architecture</h3>
+                                <p class="text-slate-300 font-light leading-relaxed mb-8">
+                                    Master planning that considers topography, sunlight, and architecture to create cohesive outdoor environments.
+                                </p>
+                                <span class="text-xs font-bold tracking-widest uppercase border-b border-primary pb-1 group-hover:border-accent-copper group-hover:text-accent-copper transition-colors">Explore Design</span>
                             </div>
                         </div>
                     </a>
 
-                    <a href="services/decks-pergolas.html" class="group">
-                        <div class="bg-stone-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-stone-100 h-full">
-                            <div class="bg-sage-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
-                                <i data-lucide="home" class="w-8 h-8 text-sage-600"></i>
-                            </div>
-                            <h3 class="font-display text-2xl font-bold text-earth-900 mb-3 group-hover:text-sage-600 transition-colors">Decks & Pergolas</h3>
-                            <p class="text-stone-600 leading-relaxed mb-4">Custom cedar and composite decks, pergolas, and shade structures that elevate your outdoor experience.</p>
-                            <ul class="space-y-2 text-sm text-stone-700 mb-4">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Composite Decking</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Cedar Decks</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Pergolas & Gazebos</li>
-                            </ul>
-                            <div class="flex items-center text-sage-600 font-semibold text-sm">
-                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="services/hardscaping.html" class="group">
-                        <div class="bg-stone-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-stone-100 h-full">
-                            <div class="bg-sage-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
-                                <i data-lucide="cube" class="w-8 h-8 text-sage-600"></i>
-                            </div>
-                            <h3 class="font-display text-2xl font-bold text-earth-900 mb-3 group-hover:text-sage-600 transition-colors">Hardscaping</h3>
-                            <p class="text-stone-600 leading-relaxed mb-4">Elegant retaining walls, natural stone walkways, steps, and structural elements that define your landscape.</p>
-                            <ul class="space-y-2 text-sm text-stone-700 mb-4">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Retaining Walls</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Natural Stone</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Walkways & Steps</li>
-                            </ul>
-                            <div class="flex items-center text-sage-600 font-semibold text-sm">
-                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    <!-- Patios -->
+                    <a href="services/patios-outdoor-living.html" class="group block h-full">
+                        <div class="service-card bg-spaceIndigo/50 p-10 h-full border border-white/10 hover:border-accent-copper transition-all duration-500 relative overflow-hidden">
+                            <span class="absolute top-6 right-6 text-9xl font-display text-white/30 opacity-50 group-hover:text-accent-copper/10 transition-colors">02</span>
+                            
+                            <div class="relative z-10">
+                                <div class="w-12 h-12 mb-8 text-primary group-hover:text-accent-copper transition-colors">
+                                    <i data-lucide="layout" class="w-full h-full stroke-1"></i>
+                                </div>
+                                <h3 class="font-display text-2xl mb-4 group-hover:translate-x-2 transition-transform duration-300 text-white">Hardscapes & Patios</h3>
+                                <p class="text-slate-300 font-light leading-relaxed mb-8">
+                                    Foundation of outdoor living. We use premium natural stone and pavers to create enduring entertainment spaces.
+                                </p>
+                                <span class="text-xs font-bold tracking-widest uppercase border-b border-primary pb-1 group-hover:border-accent-copper group-hover:text-accent-copper transition-colors">View Materials</span>
                             </div>
                         </div>
                     </a>
 
-                    <a href="services/softscaping.html" class="group">
-                        <div class="bg-stone-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-stone-100 h-full">
-                            <div class="bg-sage-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
-                                <i data-lucide="flower" class="w-8 h-8 text-sage-600"></i>
-                            </div>
-                            <h3 class="font-display text-2xl font-bold text-earth-900 mb-3 group-hover:text-sage-600 transition-colors">Softscaping</h3>
-                            <p class="text-stone-600 leading-relaxed mb-4">Lush plantings, trees, gardens, and lawn installations using native NoVA plants that thrive in our climate.</p>
-                            <ul class="space-y-2 text-sm text-stone-700 mb-4">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Native Plantings</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Tree Installation</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Garden Design</li>
-                            </ul>
-                            <div class="flex items-center text-sage-600 font-semibold text-sm">
-                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="services/outdoor-lighting.html" class="group">
-                        <div class="bg-stone-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-stone-100 h-full">
-                            <div class="bg-sage-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
-                                <i data-lucide="lightbulb" class="w-8 h-8 text-sage-600"></i>
-                            </div>
-                            <h3 class="font-display text-2xl font-bold text-earth-900 mb-3 group-hover:text-sage-600 transition-colors">Outdoor Lighting</h3>
-                            <p class="text-stone-600 leading-relaxed mb-4">Transform your landscape after dark with strategic LED lighting design for beauty and security.</p>
-                            <ul class="space-y-2 text-sm text-stone-700 mb-4">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Pathway Lighting</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Uplighting</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-sage-600"></i> Smart Controls</li>
-                            </ul>
-                            <div class="flex items-center text-sage-600 font-semibold text-sm">
-                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    <!-- Structures -->
+                    <a href="services/decks-pergolas.html" class="group block h-full">
+                        <div class="service-card bg-spaceIndigo/50 p-10 h-full border border-white/10 hover:border-accent-copper transition-all duration-500 relative overflow-hidden">
+                            <span class="absolute top-6 right-6 text-9xl font-display text-white/30 opacity-50 group-hover:text-accent-copper/10 transition-colors">03</span>
+                            
+                            <div class="relative z-10">
+                                <div class="w-12 h-12 mb-8 text-primary group-hover:text-accent-copper transition-colors">
+                                    <i data-lucide="home" class="w-full h-full stroke-1"></i>
+                                </div>
+                                <h3 class="font-display text-2xl mb-4 group-hover:translate-x-2 transition-transform duration-300 text-white">Structures & Decks</h3>
+                                <p class="text-slate-300 font-light leading-relaxed mb-8">
+                                    Architectural extensions of your home. Pergolas, pavilions, and decks built with artisanal carpentry.
+                                </p>
+                                <span class="text-xs font-bold tracking-widest uppercase border-b border-primary pb-1 group-hover:border-accent-copper group-hover:text-accent-copper transition-colors">See Details</span>
                             </div>
                         </div>
                     </a>
@@ -512,167 +642,192 @@
         </section>
 
         <!-- Portfolio Preview Section -->
-        <section id="portfolio" class="py-20 bg-stone-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="portfolio" class="py-20 bg-primary-900">
+            <div class="w-full px-[20%]">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <p class="text-sage-600 font-semibold text-sm uppercase tracking-wide mb-2">Our Work</p>
-                    <h2 class="font-display text-4xl font-bold text-earth-900 mb-4">Featured Projects</h2>
-                    <p class="text-stone-600 text-lg">Explore our portfolio of stunning outdoor transformations across Northern Virginia.</p>
+                    <p class="text-primary-500 font-semibold text-sm uppercase tracking-wide mb-2">Our Work</p>
+                    <h2 class="font-display text-4xl font-bold text-text mb-4">Featured Projects</h2>
+                    <p class="text-primary-500 text-lg">Explore our portfolio of stunning outdoor transformations across Northern Virginia.</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <a href="portfolio/featured.html" class="group relative h-80 rounded-2xl overflow-hidden">
+                <div class="grid md:grid-cols-3 gap-4">
+                    <a href="portfolio/featured.html" class="group relative h-64 rounded-xl overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=600&auto=format&fit=crop" alt="Modern patio project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-earth-900 via-earth-900/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <p class="text-sage-400 text-xs font-semibold uppercase tracking-wide mb-1">Featured Project</p>
-                            <h3 class="font-display text-xl font-bold text-white mb-1">Modern Patio & Outdoor Kitchen</h3>
-                            <p class="text-stone-300 text-sm">Fairfax, VA</p>
+                        <div class="absolute inset-0 bg-primary-600/60"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-white font-semibold text-lg">Modern Patio</span>
                         </div>
                     </a>
-                    <a href="portfolio/featured.html" class="group relative h-80 rounded-2xl overflow-hidden">
+                    <a href="portfolio/featured.html" class="group relative h-64 rounded-xl overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=600&auto=format&fit=crop" alt="Composite deck project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-earth-900 via-earth-900/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <p class="text-sage-400 text-xs font-semibold uppercase tracking-wide mb-1">Featured Project</p>
-                            <h3 class="font-display text-xl font-bold text-white mb-1">Multi-Level Composite Deck</h3>
-                            <p class="text-stone-300 text-sm">Arlington, VA</p>
+                        <div class="absolute inset-0 bg-primary-600/60"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-white font-semibold text-lg">Composite Deck</span>
                         </div>
                     </a>
-                    <a href="portfolio/featured.html" class="group relative h-80 rounded-2xl overflow-hidden">
+                    <a href="portfolio/featured.html" class="group relative h-64 rounded-xl overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=600&auto=format&fit=crop" alt="Hardscaping project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-earth-900 via-earth-900/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <p class="text-sage-400 text-xs font-semibold uppercase tracking-wide mb-1">Featured Project</p>
-                            <h3 class="font-display text-xl font-bold text-white mb-1">Natural Stone Retaining Walls</h3>
-                            <p class="text-stone-300 text-sm">Alexandria, VA</p>
+                        <div class="absolute inset-0 bg-primary-600/60"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-white font-semibold text-lg">Natural Stone</span>
                         </div>
                     </a>
                 </div>
 
                 <div class="text-center mt-10">
-                    <a href="portfolio/residential.html" class="inline-flex items-center gap-2 bg-earth-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-earth-800 transition-colors">
+                    <a href="portfolio/residential.html" class="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-600 transition-colors">
                         View Full Portfolio <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Process Section -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <p class="text-sage-600 font-semibold text-sm uppercase tracking-wide mb-2">Our Process</p>
-                    <h2 class="font-display text-4xl font-bold text-earth-900 mb-4">From Vision to Reality</h2>
-                    <p class="text-stone-600 text-lg">We make your outdoor transformation seamless with our proven 5-step process.</p>
-                </div>
-
-                <div class="grid md:grid-cols-5 gap-8">
-                    <div class="text-center">
-                        <div class="bg-sage-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-sage-600 font-display text-3xl font-bold">1</span>
-                        </div>
-                        <h3 class="font-display text-lg font-bold text-earth-900 mb-2">Consultation</h3>
-                        <p class="text-stone-600 text-sm">We visit your property to understand your vision, assess the site, and discuss your goals.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="bg-sage-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-sage-600 font-display text-3xl font-bold">2</span>
-                        </div>
-                        <h3 class="font-display text-lg font-bold text-earth-900 mb-2">Design</h3>
-                        <p class="text-stone-600 text-sm">Our designers create detailed 3D renderings and comprehensive project plans for your approval.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="bg-sage-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-sage-600 font-display text-3xl font-bold">3</span>
-                        </div>
-                        <h3 class="font-display text-lg font-bold text-earth-900 mb-2">Proposal</h3>
-                        <p class="text-stone-600 text-sm">Receive a detailed proposal with transparent pricing, timeline, and material specifications.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="bg-sage-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-sage-600 font-display text-3xl font-bold">4</span>
-                        </div>
-                        <h3 class="font-display text-lg font-bold text-earth-900 mb-2">Installation</h3>
-                        <p class="text-stone-600 text-sm">Our skilled craftsmen bring your design to life with precision and attention to detail.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="bg-sage-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-sage-600 font-display text-3xl font-bold">5</span>
-                        </div>
-                        <h3 class="font-display text-lg font-bold text-earth-900 mb-2">Enjoyment</h3>
-                        <p class="text-stone-600 text-sm">We conduct a final walkthrough to ensure everything exceeds your expectations.</p>
-                    </div>
-                </div>
+        <!-- Testimonials Section - Infinite Marquee -->
+        <section class="py-20 bg-primary-900 overflow-hidden">
+            <div class="w-[90%] max-w-[1400px] mx-auto text-center mb-16 relative z-10">
+                <span class="label-text text-primary mb-4 block tracking-widest">Client Stories</span>
+                <h2 class="font-display text-4xl font-bold text-white">Voices of Satisfaction</h2>
             </div>
-        </section>
 
-        <!-- Testimonials Section -->
-        <section class="py-20 bg-earth-900 text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <p class="text-sage-400 font-semibold text-sm uppercase tracking-wide mb-2">Testimonials</p>
-                    <h2 class="font-display text-4xl font-bold mb-4">What Our Clients Say</h2>
-                </div>
+            <!-- Marquee Container -->
+            <div class="relative w-full">
+                <!-- Fade Gradients -->
+                <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-primary-900 to-transparent z-20 pointer-events-none"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-primary-900 to-transparent z-20 pointer-events-none"></div>
 
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-earth-800 p-8 rounded-2xl">
-                        <div class="flex text-yellow-400 mb-4">
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                <div class="flex gap-8 marquee-scroll w-max animate-marquee hover:pause-marquee">
+                    <!-- Review 1 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
                         </div>
-                        <p class="text-stone-200 mb-6 leading-relaxed">"xScapes transformed our backyard into an absolute paradise. The patio and outdoor kitchen are beyond what we imagined. Their team was professional, clean, and finished on time."</p>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"The way they integrated the stone retaining wall with the lighting is masterful. It feels like a resort."</p>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-sage-600 rounded-full flex items-center justify-center">
-                                <span class="font-semibold">JM</span>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Jennifer M.</p>
-                                <p class="text-stone-400 text-sm">Fairfax, VA</p>
-                            </div>
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">ES</div>
+                            <div><p class="font-semibold text-white">Elena S.</p><p class="text-xs text-primary-400">Great Falls</p></div>
                         </div>
                     </div>
-
-                    <div class="bg-earth-800 p-8 rounded-2xl">
-                        <div class="flex text-yellow-400 mb-4">
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    <!-- Review 2 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
                         </div>
-                        <p class="text-stone-200 mb-6 leading-relaxed">"We hired xScapes for our deck project and couldn't be happier. The composite deck they built is beautiful and low-maintenance. Highly recommend their design expertise!"</p>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"xScapes didn't just build a deck; they architected a lifestyle upgrade. The 3D plans were spot on."</p>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-sage-600 rounded-full flex items-center justify-center">
-                                <span class="font-semibold">RK</span>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Robert K.</p>
-                                <p class="text-stone-400 text-sm">Arlington, VA</p>
-                            </div>
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">MJ</div>
+                            <div><p class="font-semibold text-white">Michael J.</p><p class="text-xs text-primary-400">Arlington</p></div>
                         </div>
                     </div>
-
-                    <div class="bg-earth-800 p-8 rounded-2xl">
-                        <div class="flex text-yellow-400 mb-4">
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    <!-- Review 3 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
                         </div>
-                        <p class="text-stone-200 mb-6 leading-relaxed">"From the initial consultation to the final walkthrough, xScapes exceeded our expectations. Their hardscaping work on our retaining wall and walkway is exceptional."</p>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"Professional, clean, and artistic. The transition from our kitchen to the patio is seamless."</p>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-sage-600 rounded-full flex items-center justify-center">
-                                <span class="font-semibold">ST</span>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Sarah T.</p>
-                                <p class="text-stone-400 text-sm">Alexandria, VA</p>
-                            </div>
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">RK</div>
+                            <div><p class="font-semibold text-white">Rachel K.</p><p class="text-xs text-primary-400">Vienna</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 4 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"Every detail was considered. From the drainage to the fire pit placement. Highly recommended."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">DT</div>
+                            <div><p class="font-semibold text-white">David T.</p><p class="text-xs text-primary-400">McLean</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 5 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"The team was respectful of our property and delivered a magazine-worthy backyard."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">LB</div>
+                            <div><p class="font-semibold text-white">Laura B.</p><p class="text-xs text-primary-400">Fairfax</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 6 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"The best investment we've made in our home. It's not just landscaping; it's art."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">SM</div>
+                            <div><p class="font-semibold text-white">Steve M.</p><p class="text-xs text-primary-400">Reston</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 7 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"They transformed a steep, unusable hill into a terraced garden oasis. Truly talented engineers."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">AB</div>
+                            <div><p class="font-semibold text-white">Amanda B.</p><p class="text-xs text-primary-400">Falls Church</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 8 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"The lighting design creates such a mood at night. We use our patio every single evening now."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">TP</div>
+                            <div><p class="font-semibold text-white">Thomas P.</p><p class="text-xs text-primary-400">Alexandria</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 9 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"Exceptional craftsmanship. The joinery on the pergola is furniture-grade quality."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">GW</div>
+                            <div><p class="font-semibold text-white">George W.</p><p class="text-xs text-primary-400">Loudoun</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 10 -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"We interviewed five firms. xScapes was the only one that truly listened to our vision."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">NK</div>
+                            <div><p class="font-semibold text-white">Natalie K.</p><p class="text-xs text-primary-400">Tysons</p></div>
+                        </div>
+                    </div>
+                    
+                    <!-- DUPLICATE FOR INFINITE LOOP EFFECT -->
+                    <!-- Review 1 Copy -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"The way they integrated the stone retaining wall with the lighting is masterful. It feels like a resort."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">ES</div>
+                            <div><p class="font-semibold text-white">Elena S.</p><p class="text-xs text-primary-400">Great Falls</p></div>
+                        </div>
+                    </div>
+                    <!-- Review 2 Copy -->
+                    <div class="glass-panel p-8 rounded-2xl w-[400px] flex-shrink-0 border border-white/5 bg-primary-800/30 backdrop-blur-md">
+                        <div class="flex text-accent-copper mb-4">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-primary-200 text-lg mb-6 italic leading-relaxed">"xScapes didn't just build a deck; they architected a lifestyle upgrade. The 3D plans were spot on."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary border border-primary/30">MJ</div>
+                            <div><p class="font-semibold text-white">Michael J.</p><p class="text-xs text-primary-400">Arlington</p></div>
                         </div>
                     </div>
                 </div>
@@ -680,182 +835,113 @@
         </section>
 
         <!-- Service Area Section -->
-        <section class="py-16 bg-stone-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="py-16 bg-background-light">
+            <div class="w-full px-[10%]">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <p class="text-sage-600 font-semibold text-sm uppercase tracking-wide mb-2">Service Area</p>
-                        <h2 class="font-display text-3xl md:text-4xl font-bold text-earth-900 mb-4">Proudly Serving Northern Virginia</h2>
-                        <p class="text-stone-600 text-lg mb-6">Based in Fairfax County, we provide landscape architecture and outdoor living design services throughout NoVA.</p>
+                        <p class="text-primary-500 font-semibold text-sm uppercase tracking-wide mb-2">Service Area</p>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold text-text mb-4">Proudly Serving Northern Virginia</h2>
+                        <p class="text-text-light text-lg mb-6">Based in Fairfax County, we provide landscape architecture and outdoor living design services throughout NoVA.</p>
                         
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>Fairfax County</span>
                             </div>
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>Arlington County</span>
                             </div>
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>Alexandria</span>
                             </div>
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>Falls Church</span>
                             </div>
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>McLean</span>
                             </div>
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>Reston</span>
                             </div>
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>Herndon</span>
                             </div>
-                            <div class="flex items-center gap-2 text-stone-700">
-                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-600"></i>
+                            <div class="flex items-center gap-2 text-text-lighter">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary-500"></i>
                                 <span>Vienna</span>
                             </div>
                         </div>
                     </div>
                     <div class="relative">
-                        <div class="bg-white p-6 rounded-2xl shadow-lg">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Fairfax_County_Virginia_incorporated_and_unincorporated_areas_Fairfax_highlighted.svg/1200px-Fairfax_County_Virginia_incorporated_and_unincorporated_areas_Fairfax_highlighted.svg.png" alt="Northern Virginia service area map" class="w-full rounded-lg opacity-50">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <p class="text-stone-400 text-sm">NoVA Service Area Map</p>
-                            </div>
+                        <div class="rounded-2xl overflow-hidden shadow-lg">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10063.687726!2d-77.428!3d38.896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b6487c3c3c3c3c%3A0x3c3c3c3c3c3c3c3c!2sChantilly%2C%20VA!5e0!3m2!1sen!2sus!4v1699999999999!5m2!1sen!2sus" 
+                                width="100%" 
+                                height="400" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section id="contact" class="py-20 bg-white">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-10">
-                    <p class="text-sage-600 font-semibold text-sm uppercase tracking-wide mb-2">Get Started</p>
-                    <h2 class="font-display text-4xl font-bold text-earth-900 mb-4">Ready to Transform Your Outdoor Space?</h2>
-                    <p class="text-stone-600 text-lg">Schedule your free design consultation today. No obligation, just exceptional outdoor living.</p>
-                </div>
-
-                <div class="bg-stone-50 p-8 md:p-10 rounded-2xl border border-stone-200">
-                    <form id="contact-form" class="space-y-6">
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-stone-700 mb-2">Name *</label>
-                                <input type="text" name="name" required placeholder="Your full name" class="w-full h-12 px-4 rounded-md bg-white border border-stone-300 focus:ring-2 focus:ring-sage-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-stone-700 mb-2">Phone *</label>
-                                <input type="tel" name="phone" required placeholder="(703) XXX-XXXX" class="w-full h-12 px-4 rounded-md bg-white border border-stone-300 focus:ring-2 focus:ring-sage-500 focus:border-transparent">
-                            </div>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-stone-700 mb-2">Email *</label>
-                                <input type="email" name="email" required placeholder="email@example.com" class="w-full h-12 px-4 rounded-md bg-white border border-stone-300 focus:ring-2 focus:ring-sage-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-stone-700 mb-2">Address</label>
-                                <input type="text" name="address" placeholder="Project address" class="w-full h-12 px-4 rounded-md bg-white border border-stone-300 focus:ring-2 focus:ring-sage-500 focus:border-transparent">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-stone-700 mb-2">What interests you?</label>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                <label class="flex items-center gap-2 bg-white border border-stone-300 px-4 py-3 rounded-md cursor-pointer hover:border-sage-500 transition-colors">
-                                    <input type="checkbox" name="services" value="Patio" class="w-4 h-4 rounded text-sage-600 focus:ring-sage-500">
-                                    <span class="text-sm">Patio</span>
-                                </label>
-                                <label class="flex items-center gap-2 bg-white border border-stone-300 px-4 py-3 rounded-md cursor-pointer hover:border-sage-500 transition-colors">
-                                    <input type="checkbox" name="services" value="Deck" class="w-4 h-4 rounded text-sage-600 focus:ring-sage-500">
-                                    <span class="text-sm">Deck</span>
-                                </label>
-                                <label class="flex items-center gap-2 bg-white border border-stone-300 px-4 py-3 rounded-md cursor-pointer hover:border-sage-500 transition-colors">
-                                    <input type="checkbox" name="services" value="Outdoor Kitchen" class="w-4 h-4 rounded text-sage-600 focus:ring-sage-500">
-                                    <span class="text-sm">Outdoor Kitchen</span>
-                                </label>
-                                <label class="flex items-center gap-2 bg-white border border-stone-300 px-4 py-3 rounded-md cursor-pointer hover:border-sage-500 transition-colors">
-                                    <input type="checkbox" name="services" value="Hardscaping" class="w-4 h-4 rounded text-sage-600 focus:ring-sage-500">
-                                    <span class="text-sm">Hardscaping</span>
-                                </label>
-                                <label class="flex items-center gap-2 bg-white border border-stone-300 px-4 py-3 rounded-md cursor-pointer hover:border-sage-500 transition-colors">
-                                    <input type="checkbox" name="services" value="Full Landscape" class="w-4 h-4 rounded text-sage-600 focus:ring-sage-500">
-                                    <span class="text-sm">Full Landscape</span>
-                                </label>
-                                <label class="flex items-center gap-2 bg-white border border-stone-300 px-4 py-3 rounded-md cursor-pointer hover:border-sage-500 transition-colors">
-                                    <input type="checkbox" name="services" value="Other" class="w-4 h-4 rounded text-sage-600 focus:ring-sage-500">
-                                    <span class="text-sm">Other</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-stone-700 mb-2">Project Details</label>
-                            <textarea name="description" rows="4" placeholder="Tell us about your vision, timeline, and any specific requirements..." class="w-full px-4 py-3 rounded-md bg-white border border-stone-300 focus:ring-2 focus:ring-sage-500 focus:border-transparent resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-copper-500 hover:bg-copper-600 text-white font-bold py-4 rounded-md transition duration-300 text-lg shadow-lg">
-                            Request Free Consultation
-                        </button>
-                        <div id="contact-form-status" class="hidden text-center text-sm py-2 rounded-lg"></div>
-                    </form>
                 </div>
             </div>
         </section>
 
         <!-- Footer -->
-        <footer class="bg-earth-900 text-white py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <footer class="bg-slate-800 text-slate-200 py-12">
+            <div class="w-full px-[10%]">
                 <div class="grid md:grid-cols-4 gap-8 mb-8">
                     <div>
                         <div class="flex items-center gap-2 mb-4">
-                            <div class="w-10 h-10 bg-sage-600 rounded-lg flex items-center justify-center">
+                            <div class="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center">
                                 <i data-lucide="trees" class="w-6 h-6 text-white"></i>
                             </div>
-                            <span class="font-display text-2xl font-bold">xScapes</span>
+                            <span class="font-display text-2xl font-bold text-white">xScapes</span>
                         </div>
-                        <p class="text-stone-400 text-sm">NoVA's premier modern landscape architecture firm. Transforming outdoor spaces into breathtaking living environments since 2015.</p>
+                        <p class="text-slate-400 text-sm">NoVA's premier modern landscape architecture firm. Transforming outdoor spaces into breathtaking living environments since 2015.</p>
                     </div>
                     <div>
-                        <h4 class="font-semibold mb-4">Services</h4>
-                        <ul class="space-y-2 text-sm text-stone-400">
-                            <li><a href="services/landscape-design.html" class="hover:text-sage-400 transition-colors">Landscape Design</a></li>
-                            <li><a href="services/patios-outdoor-living.html" class="hover:text-sage-400 transition-colors">Patios & Outdoor Living</a></li>
-                            <li><a href="services/decks-pergolas.html" class="hover:text-sage-400 transition-colors">Decks & Pergolas</a></li>
-                            <li><a href="services/hardscaping.html" class="hover:text-sage-400 transition-colors">Hardscaping</a></li>
-                            <li><a href="services/softscaping.html" class="hover:text-sage-400 transition-colors">Softscaping</a></li>
+                        <h4 class="font-semibold mb-4 text-white">Services</h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li><a href="services/landscape-design.html" class="hover:text-primary-400 transition-colors">Landscape Design</a></li>
+                            <li><a href="services/patios-outdoor-living.html" class="hover:text-primary-400 transition-colors">Patios & Outdoor Living</a></li>
+                            <li><a href="services/decks-pergolas.html" class="hover:text-primary-400 transition-colors">Decks & Pergolas</a></li>
+                            <li><a href="services/hardscaping.html" class="hover:text-primary-400 transition-colors">Hardscaping</a></li>
+                            <li><a href="services/softscaping.html" class="hover:text-primary-400 transition-colors">Softscaping</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold mb-4">Company</h4>
-                        <ul class="space-y-2 text-sm text-stone-400">
-                            <li><a href="/about.html" class="hover:text-sage-400 transition-colors">About Us</a></li>
-                            <li><a href="#portfolio" class="hover:text-sage-400 transition-colors">Portfolio</a></li>
-                            <li><a href="/materials.html" class="hover:text-sage-400 transition-colors">Materials</a></li>
-                            <li><a href="#" class="hover:text-sage-400 transition-colors">Blog</a></li>
+                        <h4 class="font-semibold mb-4 text-white">Company</h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li><a href="/about.html" class="hover:text-primary-400 transition-colors">About Us</a></li>
+                            <li><a href="#portfolio" class="hover:text-primary-400 transition-colors">Portfolio</a></li>
+                            <li><a href="/materials.html" class="hover:text-primary-400 transition-colors">Materials</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold mb-4">Contact</h4>
-                        <ul class="space-y-2 text-sm text-stone-400">
-                            <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> (703) XXX-XXXX</li>
+                        <h4 class="font-semibold mb-4 text-white">Contact</h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> (703) 555-0123</li>
                             <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> info@xscapesnova.com</li>
                             <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Fairfax, VA</li>
                         </ul>
                         <div class="flex gap-3 mt-4">
-                            <a href="#" class="bg-stone-800 p-2 rounded-md hover:bg-sage-600 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                            <a href="#" class="bg-stone-800 p-2 rounded-md hover:bg-sage-600 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                            <a href="#" class="bg-stone-800 p-2 rounded-md hover:bg-sage-600 transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                            <a href="#" class="bg-slate-700 p-2 rounded-md hover:bg-slate-600 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                            <a href="#" class="bg-slate-700 p-2 rounded-md hover:bg-slate-600 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                            <a href="#" class="bg-slate-700 p-2 rounded-md hover:bg-slate-600 transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="border-t border-stone-800 pt-8 text-center text-sm text-stone-500">
-                    <p>&copy; 2024 xScapes. All rights reserved. | <a href="#" class="hover:text-stone-400">Privacy Policy</a> | <a href="#" class="hover:text-stone-400">Terms of Service</a></p>
+                <div class="border-t border-slate-700 pt-8 text-center text-sm text-slate-500">
+                    <p>&copy; 2024 xScapes. All rights reserved. | <a href="/privacy.html" class="hover:text-primary-400">Privacy Policy</a> | <a href="/terms.html" class="hover:text-primary-400">Terms of Service</a></p>
                 </div>
             </div>
         </footer>
@@ -868,79 +954,53 @@
                 menu.classList.toggle('hidden');
             });
 
-            const quoteForm = document.getElementById('quote-form');
-            if (quoteForm) {
-                quoteForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    const statusEl = document.getElementById('form-status');
-                    const submitBtn = quoteForm.querySelector('button[type="submit"]');
-                    
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Sending...';
-                    statusEl.className = 'text-center text-sm py-2 rounded-lg bg-yellow-100 text-yellow-800';
-                    statusEl.textContent = 'Sending your request...';
-                    statusEl.classList.remove('hidden');
-
-                    const formData = new FormData(quoteForm);
-                    const data = {
-                        name: formData.get('name'),
-                        email: formData.get('email'),
-                        phone: formData.get('phone'),
-                        address: formData.get('address'),
-                        services: formData.getAll('services'),
-                        budget: formData.get('budget'),
-                        timeline: formData.get('timeline'),
-                        description: formData.get('description')
-                    };
-
-                    try {
-                        const response = await fetch('/api/contact', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-
-                        const result = await response.json();
-
-                        if (result.success) {
-                            statusEl.className = 'text-center text-sm py-2 rounded-lg bg-green-100 text-green-800';
-                            statusEl.textContent = result.message;
-                            quoteForm.reset();
-                        } else {
-                            throw new Error(result.error || 'Failed to send');
-                        }
-                    } catch (error) {
-                        statusEl.className = 'text-center text-sm py-2 rounded-lg bg-red-100 text-red-800';
-                        statusEl.textContent = error.message;
-                    }
-
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Request Free Consultation';
-                });
+            // Form validation helper functions
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             }
 
+            function isValidPhone(phone) {
+                const digits = phone.replace(/\D/g, '');
+                return digits.length >= 10;
+            }
+
+            function showFormError(statusEl, message) {
+                statusEl.className = 'text-center text-sm py-2 rounded-lg bg-red-100 text-red-800';
+                statusEl.textContent = message;
+                statusEl.classList.remove('hidden');
+            }
+
+            // Handle Contact Form Submission
             const contactForm = document.getElementById('contact-form');
             if (contactForm) {
                 contactForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const statusEl = document.getElementById('contact-form-status');
                     const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+                    const formData = new FormData(contactForm);
+                    const email = formData.get('email');
+                    const phone = formData.get('phone');
                     
+                    // Validate email format
+                    if (!isValidEmail(email)) {
+                        showFormError(statusEl, 'Please enter a valid email address.');
+                        return;
+                    }
+
+                    // Validate phone format
+                    if (!isValidPhone(phone)) {
+                        showFormError(statusEl, 'Please enter a valid phone number (at least 10 digits).');
+                        return;
+                    }
+
                     submitBtn.disabled = true;
                     submitBtn.textContent = 'Sending...';
                     statusEl.className = 'text-center text-sm py-2 rounded-lg bg-yellow-100 text-yellow-800';
                     statusEl.textContent = 'Sending your request...';
                     statusEl.classList.remove('hidden');
-
-                    const formData = new FormData(contactForm);
-                    const data = {
-                        name: formData.get('name'),
-                        email: formData.get('email'),
-                        phone: formData.get('phone'),
-                        address: formData.get('address'),
-                        services: formData.getAll('services'),
-                        description: formData.get('description')
-                    };
+                    
+                    const data = Object.fromEntries(formData.entries());
 
                     try {
                         const response = await fetch('/api/contact', {
@@ -964,9 +1024,54 @@
                     }
 
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Request Free Consultation';
+                    submitBtn.textContent = 'Request Consultation';
                 });
             }
+
+            // Monitor/Process Interactive Logic
+            function selectProcessStep(stepId) {
+                // Update sidebar nav items
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    // Reset to default "Ghost" style
+                    item.classList.remove('bg-primary', 'text-primary-900', 'shadow-[0_0_20px_rgba(56,189,248,0.3)]');
+                    item.classList.add('text-primary-400', 'hover:bg-white/5', 'hover:text-white');
+                });
+                
+                // Activate selected item
+                const activeItem = document.querySelector(`.nav-item[data-step="${stepId}"]`);
+                if (activeItem) {
+                    activeItem.classList.remove('text-primary-400', 'hover:bg-white/5', 'hover:text-white');
+                    activeItem.classList.add('bg-primary', 'text-primary-900', 'shadow-[0_0_20px_rgba(56,189,248,0.3)]');
+                }
+
+                // Update content panels
+                document.querySelectorAll('.step-panel').forEach(panel => {
+                    panel.classList.add('hidden');
+                });
+                const activePanel = document.querySelector(`[data-panel="${stepId}"]`);
+                if (activePanel) {
+                    activePanel.classList.remove('hidden');
+                    
+                    // Trigger a subtle image fade-in for smooth effect
+                    const img = activePanel.querySelector('img');
+                    if (img) {
+                        img.style.opacity = '0';
+                        img.style.transform = 'scale(1.02)';
+                        setTimeout(() => {
+                            img.style.transition = 'all 0.5s ease-out';
+                            img.style.opacity = '1';
+                            img.style.transform = 'scale(1)';
+                        }, 50);
+                    }
+                }
+            }
+
+            // Add click handlers to sidebar nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    selectProcessStep(this.dataset.step);
+                });
+            });
         </script>
     </body>
 </html>

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "express": "^4.22.1",
-    "resend": "^4.8.0"
+    "resend": "^4.8.0",
+    "sharp": "^0.34.5"
   }
 }

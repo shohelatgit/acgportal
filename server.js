@@ -162,7 +162,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const PORT = 5000;
+const PORT = 3000;
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`xScapes server running on http://0.0.0.0:${PORT}`);
+  console.log(`xScapes server running on http://localhost:${PORT}`);
 });

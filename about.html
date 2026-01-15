@@ -7,15 +7,55 @@
         <meta name="description" content="Learn about xScapes - Northern Virginia's premier landscape architecture firm. Our story, values, and commitment to exceptional outdoor living spaces." />
         <link rel="canonical" href="https://xscapesnova.com/about.html" />
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com/3.4.1?plugins=forms"></script>
         <script>
             tailwind.config = {
                 theme: {
                     extend: {
                         colors: {
-                            earth: { 950: "#1c1917", 900: "#292524", 800: "#44403c", 600: "#78716c" },
-                            stone: { 100: "#f5f5f4", 50: "#fafaf9" },
-                            sage: { 600: "#558b6e", 500: "#6b8f71" },
-                            copper: { 500: "#c2410c", 600: "#9a3412" },
+                            primary: {
+                                DEFAULT: '#1489b4',
+                                600: '#1489b4',
+                                500: '#3da8d0',
+                                400: '#66c5e5',
+                                300: '#8ddcf0',
+                                200: '#b5e5f5',
+                                100: '#dceedf9',
+                                50: '#f0f8fb',
+                            },
+                            background: {
+                                DEFAULT: '#f4f5f8',
+                                light: '#fbfaf5',
+                                white: '#ffffff',
+                            },
+                            accent: {
+                                silver: {
+                                    50: '#f8f9fa',
+                                    100: '#e9ecef',
+                                    200: '#dee2e6',
+                                    300: '#ced4da',
+                                    400: '#adb5bd',
+                                    500: '#6c757d',
+                                    600: '#495057',
+                                },
+                                copper: {
+                                    DEFAULT: '#c2410c',
+                                    500: '#c2410c',
+                                    600: '#9a3412',
+                                    700: '#7c2a0a',
+                                },
+                            },
+                            text: {
+                                DEFAULT: '#1e293b',
+                                light: '#475569',
+                                lighter: '#64748b',
+                            },
+                        },
+                        backgroundImage: {
+                            'gradient-silver': 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                            'gradient-hero': 'linear-gradient(135deg, rgba(20, 137, 180, 0.85) 0%, rgba(20, 137, 180, 0.65) 50%, rgba(30, 58, 95, 0.75) 100%)',
+                            'gradient-primary': 'linear-gradient(135deg, #1489b4 0%, #3da8d0 100%)',
+                            'gradient-primary-light': 'linear-gradient(135deg, #3da8d0 0%, #66c5e5 100%)',
                         },
                         fontFamily: {
                             sans: ["Inter", "system-ui", "sans-serif"],
@@ -32,22 +72,22 @@
             .font-display { font-family: "Playfair Display", Georgia, serif; }
         </style>
     </head>
-    <body class="bg-stone-50 text-stone-900 antialiased">
-        <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm">
+    <body class="bg-background text-text antialiased">
+        <nav class="sticky top-0 z-50 bg-background-white/95 backdrop-blur-md border-b border-accent-silver-100 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
                     <a href="/" class="flex items-center gap-2">
-                        <div class="w-10 h-10 bg-earth-900 rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
                             <i data-lucide="trees" class="w-6 h-6 text-white"></i>
                         </div>
-                        <span class="font-display text-2xl font-bold text-earth-900">xScapes</span>
+                        <span class="font-display text-2xl font-bold text-primary-600">xScapes</span>
                     </a>
                     <div class="hidden md:flex items-center space-x-8">
-                        <a href="/#services" class="text-sm font-semibold text-stone-600 hover:text-sage-600">Services</a>
-                        <a href="/#portfolio" class="text-sm font-semibold text-stone-600 hover:text-sage-600">Portfolio</a>
-                        <a href="/materials.html" class="text-sm font-semibold text-stone-600 hover:text-sage-600">Materials</a>
-                        <a href="/about.html" class="text-sm font-semibold text-stone-600 hover:text-sage-600">About</a>
-                        <a href="/#contact" class="bg-copper-500 hover:bg-copper-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold">Get Quote</a>
+                        <a href="/#services" class="text-sm font-semibold text-primary-500 hover:text-primary-600">Services</a>
+                        <a href="/#portfolio" class="text-sm font-semibold text-primary-500 hover:text-primary-600">Portfolio</a>
+                        <a href="/materials.html" class="text-sm font-semibold text-primary-500 hover:text-primary-600">Materials</a>
+                        <a href="/about.html" class="text-sm font-semibold text-primary-500 hover:text-primary-600">About</a>
+                        <a href="/contact.html" class="bg-gradient-primary hover:opacity-90 text-white border-2 border-accent-silver-200 shadow-md px-5 py-2.5 rounded-full text-sm font-semibold">Get Quote</a>
                     </div>
                 </div>
             </div>
@@ -56,12 +96,12 @@
         <section class="relative py-20 text-white">
             <div class="absolute inset-0">
                 <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2070&auto=format&fit=crop" alt="Beautiful landscape" class="w-full h-full object-cover" />
-                <div class="absolute inset-0 bg-earth-900/70"></div>
+                <div class="absolute inset-0 bg-primary-600/70"></div>
             </div>
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <p class="text-sage-400 font-semibold text-sm uppercase tracking-wide mb-2">About Us</p>
+                <p class="text-primary-300 font-semibold text-sm uppercase tracking-wide mb-2">About Us</p>
                 <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Crafting Outdoor Living Excellence</h1>
-                <p class="text-xl text-stone-200 max-w-2xl">Transforming Northern Virginia properties into breathtaking outdoor living environments since 2015.</p>
+                <p class="text-xl text-primary-200 max-w-2xl">Transforming Northern Virginia properties into breathtaking outdoor living environments since 2015.</p>
             </div>
         </section>
 
@@ -69,10 +109,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 class="font-display text-3xl font-bold text-earth-900 mb-6">Our Story</h2>
-                        <p class="text-stone-600 text-lg leading-relaxed mb-6">xScapes was founded on a simple belief: everyone deserves an outdoor space that brings joy and enhances their quality of life. What started as a small landscape design service has grown into NoVA's premier full-service landscape architecture firm.</p>
-                        <p class="text-stone-600 text-lg leading-relaxed mb-6">Our team combines artistic vision with technical expertise to create outdoor environments that are both beautiful and functional. From intimate garden courtyards to expansive outdoor living complexes, we approach every project with the same dedication to excellence.</p>
-                        <p class="text-stone-600 text-lg leading-relaxed">Today, we've transformed hundreds of properties throughout Northern Virginia, earning a reputation for quality craftsmanship, exceptional design, and unwavering customer service.</p>
+                        <h2 class="font-display text-3xl font-bold text-text mb-6">Our Story</h2>
+                        <p class="text-text-light text-lg leading-relaxed mb-6">xScapes was founded on a simple belief: everyone deserves an outdoor space that brings joy and enhances their quality of life. What started as a small landscape design service has grown into NoVA's premier full-service landscape architecture firm.</p>
+                        <p class="text-text-light text-lg leading-relaxed mb-6">Our team combines artistic vision with technical expertise to create outdoor environments that are both beautiful and functional. From intimate garden courtyards to expansive outdoor living complexes, we approach every project with the same dedication to excellence.</p>
+                        <p class="text-text-light text-lg leading-relaxed">Today, we've transformed hundreds of properties throughout Northern Virginia, earning a reputation for quality craftsmanship, exceptional design, and unwavering customer service.</p>
                     </div>
                     <div class="relative">
                         <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" alt="Our team at work" class="rounded-2xl shadow-xl" />
@@ -81,81 +121,81 @@
             </div>
         </section>
 
-        <section class="py-16 bg-stone-100">
+        <section class="py-16 bg-background-light">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
-                    <h2 class="font-display text-3xl font-bold text-earth-900 mb-4">Our Values</h2>
-                    <p class="text-stone-600 text-lg">The principles that guide everything we do.</p>
+                    <h2 class="font-display text-3xl font-bold text-text mb-4">Our Values</h2>
+                    <p class="text-text-light text-lg">The principles that guide everything we do.</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-2xl shadow-sm">
-                        <div class="bg-sage-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
-                            <i data-lucide="sparkles" class="w-7 h-7 text-sage-600"></i>
+                    <div class="bg-background-white p-8 rounded-2xl shadow-sm">
+                        <div class="bg-primary-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
+                            <i data-lucide="sparkles" class="w-7 h-7 text-primary-500"></i>
                         </div>
-                        <h3 class="font-display text-xl font-bold text-earth-900 mb-2">Quality Without Compromise</h3>
-                        <p class="text-stone-600">We never cut corners. Every project receives our full attention to detail, using only the finest materials and proven techniques.</p>
+                        <h3 class="font-display text-xl font-bold text-text mb-2">Quality Without Compromise</h3>
+                        <p class="text-text-light">We never cut corners. Every project receives our full attention to detail, using only the finest materials and proven techniques.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-2xl shadow-sm">
-                        <div class="bg-sage-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
-                            <i data-lucide="users" class="w-7 h-7 text-sage-600"></i>
+                    <div class="bg-background-white p-8 rounded-2xl shadow-sm">
+                        <div class="bg-primary-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
+                            <i data-lucide="users" class="w-7 h-7 text-primary-500"></i>
                         </div>
-                        <h3 class="font-display text-xl font-bold text-earth-900 mb-2">Client-First Approach</h3>
-                        <p class="text-stone-600">Your vision drives our design. We listen carefully, communicate clearly, and ensure you're delighted with the result.</p>
+                        <h3 class="font-display text-xl font-bold text-text mb-2">Client-First Approach</h3>
+                        <p class="text-text-light">Your vision drives our design. We listen carefully, communicate clearly, and ensure you're delighted with the result.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-2xl shadow-sm">
-                        <div class="bg-sage-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
-                            <i data-lucide="leaf" class="w-7 h-7 text-sage-600"></i>
+                    <div class="bg-background-white p-8 rounded-2xl shadow-sm">
+                        <div class="bg-primary-100 w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
+                            <i data-lucide="leaf" class="w-7 h-7 text-primary-500"></i>
                         </div>
-                        <h3 class="font-display text-xl font-bold text-earth-900 mb-2">Sustainable Practices</h3>
-                        <p class="text-stone-600">We design for longevity and environmental responsibility, using native plants and eco-friendly materials whenever possible.</p>
+                        <h3 class="font-display text-xl font-bold text-text mb-2">Sustainable Practices</h3>
+                        <p class="text-text-light">We design for longevity and environmental responsibility, using native plants and eco-friendly materials whenever possible.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-16 bg-white">
+         <section class="py-16 bg-background-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-12">
-                    <h2 class="font-display text-3xl font-bold text-earth-900 mb-4">What Sets Us Apart</h2>
+                    <h2 class="font-display text-3xl font-bold text-text mb-4">What Sets Us Apart</h2>
                 </div>
                 <div class="grid md:grid-cols-4 gap-8">
                     <div class="text-center">
-                        <div class="text-4xl font-display font-bold text-sage-600 mb-2">500+</div>
-                        <p class="text-stone-600 font-semibold">Projects Completed</p>
+                        <div class="text-4xl font-display font-bold text-primary-500 mb-2">500+</div>
+                        <p class="text-text-lighter font-semibold">Projects Completed</p>
                     </div>
                     <div class="text-center">
-                        <div class="text-4xl font-display font-bold text-sage-600 mb-2">9+</div>
-                        <p class="text-stone-600 font-semibold">Years in Business</p>
+                        <div class="text-4xl font-display font-bold text-primary-500 mb-2">9+</div>
+                        <p class="text-text-lighter font-semibold">Years in Business</p>
                     </div>
                     <div class="text-center">
-                        <div class="text-4xl font-display font-bold text-sage-600 mb-2">100%</div>
-                        <p class="text-stone-600 font-semibold">Licensed & Insured</p>
+                        <div class="text-4xl font-display font-bold text-primary-500 mb-2">100%</div>
+                        <p class="text-text-lighter font-semibold">Licensed & Insured</p>
                     </div>
                     <div class="text-center">
-                        <div class="text-4xl font-display font-bold text-sage-600 mb-2">5.0</div>
-                        <p class="text-stone-600 font-semibold">Average Rating</p>
+                        <div class="text-4xl font-display font-bold text-primary-500 mb-2">5.0</div>
+                        <p class="text-text-lighter font-semibold">Average Rating</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-16 bg-earth-900 text-white">
+        <section class="py-16 bg-primary-600 text-white">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="font-display text-3xl font-bold mb-4">Ready to Work Together?</h2>
-                <p class="text-stone-300 text-lg mb-8">Let's discuss your outdoor vision and bring it to life.</p>
-                <a href="/#contact" class="inline-flex items-center gap-2 bg-copper-500 hover:bg-copper-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-colors">
+                <p class="text-primary-200 text-lg mb-8">Let's discuss your outdoor vision and bring it to life.</p>
+                <a href="/contact.html" class="inline-flex items-center gap-2 bg-gradient-primary hover:opacity-90 text-white border-2 border-accent-silver-200 shadow-md px-8 py-4 rounded-full font-semibold text-lg transition-colors">
                     Start Your Project <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
             </div>
         </section>
 
-        <footer class="bg-earth-900 text-white py-12">
+        <footer class="bg-gradient-silver text-text py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <div class="flex items-center justify-center gap-2 mb-4">
-                    <i data-lucide="trees" class="w-8 h-8 text-sage-500"></i>
+                    <i data-lucide="trees" class="w-8 h-8 text-primary-500"></i>
                     <span class="font-display text-2xl font-bold">xScapes</span>
                 </div>
-                <p class="text-stone-400 text-sm">NoVA's #1 Modern Landscape Architecture, Patio & Deck Builder</p>
+                <p class="text-primary-300 text-sm">NoVA's #1 Modern Landscape Architecture, Patio & Deck Builder</p>
             </div>
         </footer>
         <script> lucide.createIcons(); </script>
