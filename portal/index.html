@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Portal - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.1?plugins=forms"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+  <div class="portal-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <svg class="w-8 h-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+          </svg>
+          <h1>CLIENT PORTAL</h1>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <span class="nav-section-title">Overview</span>
+          <a class="nav-item active" data-page="dashboard">
+            <svg data-lucide="layout-dashboard" class="w-5 h-5"></svg>
+            <span>Dashboard</span>
+          </a>
+          <a class="nav-item" data-page="keywords">
+            <svg data-lucide="search" class="w-5 h-5"></svg>
+            <span>Keywords</span>
+          </a>
+          <a class="nav-item" data-page="tasks">
+            <svg data-lucide="check-square" class="w-5 h-5"></svg>
+            <span>Tasks</span>
+          </a>
+        </div>
+        
+        <div class="nav-section">
+          <span class="nav-section-title">Project</span>
+          <a class="nav-item" data-page="overview">
+            <svg data-lucide="eye" class="w-5 h-5"></svg>
+            <span>Overview</span>
+          </a>
+          <a class="nav-item" data-page="trends">
+            <svg data-lucide="trending-up" class="w-5 h-5"></svg>
+            <span>Trends</span>
+          </a>
+        </div>
+        
+        <div class="nav-section">
+          <span class="nav-section-title">Settings</span>
+          <a class="nav-item" data-page="settings">
+            <svg data-lucide="settings" class="w-5 h-5"></svg>
+            <span>API Settings</span>
+          </a>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="client-info" id="clientInfo">
+          <div class="client-avatar" id="clientAvatar">--</div>
+          <div class="client-details">
+            <div class="client-name" id="clientName">Loading...</div>
+            <div class="client-email" id="clientEmail">--</div>
+          </div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" title="Logout">
+          <svg data-lucide="log-out" class="w-5 h-5"></svg>
+        </button>
+      </div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="dashboard-header">
+        <div class="header-left">
+          <button class="mobile-toggle header-btn" id="sidebar-toggle">
+            <svg data-lucide="menu" class="w-5 h-5"></svg>
+          </button>
+          <div class="project-selector">
+            <svg data-lucide="home" class="w-5 h-5 text-primary-500"></svg>
+            <div class="project-selector-info">
+              <h2 id="projectName">Local Dominator</h2>
+              <span id="projectId">SEO Package</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="header-actions">
+          <button class="header-btn" id="refreshBtn" title="Refresh Data">
+            <svg data-lucide="refresh-cw" class="w-4 h-4"></svg>
+            <span>Refresh</span>
+          </button>
+          <button class="header-btn" id="helpBtn" title="Help">
+            <svg data-lucide="help-circle" class="w-4 h-4"></svg>
+            <span>Help</span>
+          </button>
+        </div>
+      </header>
+      
+      <div class="dashboard-content" id="dashboardContent">
+        <div class="loading-state">
+          <svg class="animate-spin" fill="none" viewBox="0 0 24 24" width="48" height="48">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p>Loading dashboard...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
