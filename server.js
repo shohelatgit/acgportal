@@ -14,7 +14,11 @@ import {
   getSession,
   deleteSession,
   seedDemoUser,
-  getApiConfigs
+  getApiConfigs,
+  getAllProjects,
+  getProjectsByIds,
+  updateProjectProgress,
+  addProjectNote
 } from './database/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -297,18 +301,25 @@ app.get('/api/auth/me', requireAuth, (req, res) => {
 });
 
 app.get('/api/portal/projects', requireAuth, (req, res) => {
-  const projects = [
-    {
-      id: 'local-dominator',
-      name: 'Local Dominator',
-      type: 'SEO Package',
-      status: 'active',
-      startDate: '2024-01-01',
-      lastUpdated: new Date().toISOString()
+  try {
+    const user = getUserById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-  ];
-  
-  res.json({ projects });
+
+    const allProjects = getAllProjects();
+    const engagedProjectIds = JSON.parse(user.project_ids || '[]');
+
+    const projects = allProjects.map(project => ({
+      ...project,
+      engaged: engagedProjectIds.includes(project.id)
+    }));
+
+    res.json({ projects });
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
 });
 
 app.get('/api/portal/stats', requireAuth, (req, res) => {
@@ -354,8 +365,72 @@ app.get('/api/portal/trends', requireAuth, (req, res) => {
   });
 });
 
+// Admin routes
+function requireAdmin(req, res, next) {
+  if (!req.user || req.user.email !== 'demo@acg.com') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  next();
+}
+
+app.get('/api/admin/projects', requireAuth, requireAdmin, (req, res) => {
+  try {
+    const allProjects = getAllProjects();
+    const users = [getUserByEmail('demo@acg.com')]; // For demo, only demo user
+
+    const projectsWithAssignments = allProjects.map(project => ({
+      ...project,
+      assignedUsers: users.filter(user => JSON.parse(user.project_ids || '[]').includes(project.id)).map(u => u.email)
+    }));
+
+    res.json({ projects: projectsWithAssignments });
+  } catch (error) {
+    console.error('Error fetching admin projects:', error);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
+});
+
+app.post('/api/admin/projects/:id/progress', requireAuth, requireAdmin, (req, res) => {
+  try {
+    const { progress } = req.body;
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(progress) || progress < 0 || progress > 100) {
+      return res.status(400).json({ error: 'Invalid progress value' });
+    }
+
+    updateProjectProgress(projectId, progress);
+    res.json({ success: true, message: 'Progress updated' });
+  } catch (error) {
+    console.error('Error updating progress:', error);
+    res.status(500).json({ error: 'Failed to update progress' });
+  }
+});
+
+app.post('/api/admin/projects/:id/notes', requireAuth, requireAdmin, (req, res) => {
+  try {
+    const { note } = req.body;
+    const projectId = parseInt(req.params.id);
+
+    if (!note || note.trim().length === 0) {
+      return res.status(400).json({ error: 'Note is required' });
+    }
+
+    const success = addProjectNote(projectId, note.trim());
+    if (!success) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    res.json({ success: true, message: 'Note added' });
+  } catch (error) {
+    console.error('Error adding note:', error);
+    res.status(500).json({ error: 'Failed to add note' });
+  }
+});
+
 app.use('/portal', express.static(path.join(__dirname, 'portal')));
 app.use('/auth', express.static(path.join(__dirname, 'auth')));
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
 app.use(express.static(__dirname, {
   setHeaders: (res) => {
     res.setHeader('Cache-Control', 'no-cache');
@@ -364,6 +439,10 @@ app.use(express.static(__dirname, {
 
 app.get('/portal/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'portal', 'index.html'));
+});
+
+app.get('/admin/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin', 'index.html'));
 });
 
 app.get('*', (req, res) => {

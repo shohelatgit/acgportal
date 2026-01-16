@@ -96,6 +96,9 @@ class PortalDashboard {
       case 'trends':
         await this.loadTrendsPage();
         break;
+      case 'projects':
+        await this.loadProjectsPage();
+        break;
       case 'settings':
         await this.loadSettingsPage();
         break;
@@ -456,6 +459,99 @@ class PortalDashboard {
         </div>
       `;
     }
+  }
+
+  async loadProjectsPage() {
+    const content = document.getElementById('dashboardContent');
+
+    try {
+      const data = await apiClient.getProjects();
+
+      content.innerHTML = `
+        <div class="content-header fade-in">
+          <h1 class="content-title">Projects</h1>
+          <p class="content-subtitle">Overview of all your projects with ACG</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          ${data.projects.map(project => this.renderProjectCard(project)).join('')}
+        </div>
+      `;
+    } catch (error) {
+      console.error('Failed to load projects:', error);
+      content.innerHTML = `
+        <div class="error-state">
+          <svg class="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3>Failed to load projects</h3>
+          <p>Please try refreshing the page</p>
+        </div>
+      `;
+    }
+  }
+
+  renderProjectCard(project) {
+    const hasProgress = ['Market Research', 'GTM Strategy', 'Fundraising Deck'].includes(project.type);
+
+    if (!project.engaged) {
+      return `
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-lg font-medium text-gray-900">${project.name}</h3>
+              <p class="text-sm text-gray-600">${project.type}</p>
+            </div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+              Not Engaged
+            </span>
+          </div>
+          <p class="text-gray-500 text-sm">Not engaged with us yet</p>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-lg font-medium text-gray-900">${project.name}</h3>
+            <p class="text-sm text-gray-600">${project.type}</p>
+          </div>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+            Engaged
+          </span>
+        </div>
+
+        ${hasProgress ? `
+          <div class="mb-4">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm font-medium text-gray-700">Progress</span>
+              <span class="text-sm text-gray-600">${project.progress}%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="bg-primary-500 h-2 rounded-full" style="width: ${project.progress}%"></div>
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="mb-4">
+          <h4 class="text-sm font-medium text-gray-700 mb-2">Recent Updates</h4>
+          <div class="space-y-2 max-h-24 overflow-y-auto">
+            ${project.notes.slice(-2).reverse().map(note => `
+              <div class="bg-gray-50 p-2 rounded text-xs">
+                <p class="text-gray-800">${note.note}</p>
+                <p class="text-gray-500 mt-1">${new Date(note.date).toLocaleDateString()}</p>
+              </div>
+            `).join('') || '<p class="text-gray-500 text-xs">No updates yet</p>'}
+          </div>
+        </div>
+
+        <div class="text-xs text-gray-500">
+          Status: ${project.status} • Last updated: ${new Date(project.updated_at).toLocaleDateString()}
+        </div>
+      </div>
+    `;
   }
 
   async loadOverviewPage() {

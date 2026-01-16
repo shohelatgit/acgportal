@@ -1,7 +1,7 @@
 {
   "name": "acg-client-portal",
   "version": "1.0.0",
-  "description": "ACG Client Portal - Client project dashboard",
+  "description": "ACG Client Portal - Client project dashboard with progress tracking",
   "type": "module",
   "scripts": {
     "start": "node server.js",
